@@ -13,32 +13,40 @@ public class Desafio {
         System.out.println("Agora, digite o saldo atualizado: ");
         double saldoCliente = leitura.nextDouble();
 
-        System.out.println(nomeCliente + " " + saldoCliente);
-
         Dados usuario = new Dados(saldoCliente, nomeCliente);
-        System.out.println(usuario.name);
 
         int opcao;
         do {
-            System.out.println("Operações \n");
+            String menu = """
+                    ***********************
+                    Operações: 
+                    
+                    1 - Consultar saldo
+                    2 - Receber valor
+                    3 - Transferir valor
+                    4 - Sair 
+                    
+                    Digite a opção desejada: 
+                    """;
+            System.out.println(menu);
 
-            System.out.println("1- Consultar saldo");
-            System.out.println("2- Receber valor");
-            System.out.println("3- Transferir valor");
-            System.out.println("4- Sair \n");
-            System.out.println("Digite a opção desejada: ");
             opcao = leitura.nextInt();
 
             if (opcao == 1) {
-                System.out.println("Saldo: " + usuario.mostrarSaldo());
+                System.out.println(String.format("Saldo: R$ " + usuario.mostrarSaldo(), .2f));
             } else if (opcao == 2) {
-                System.out.println("Digite o valor a ser recebeido: ");
+                System.out.println("Digite o valor a ser recebido: ");
                 double recebido = leitura.nextDouble();
-                System.out.println("Novo saldo: " + usuario.recebimento(recebido));
+                System.out.println(String.format("Novo saldo: R$ " + usuario.recebimento(recebido), .2f));
             } else if (opcao == 3) {
                 System.out.println("Digite o valor a ser transferido: ");
                 double transferido = leitura.nextDouble();
-                System.out.println("Novo saldo: " + usuario.transferencia(transferido));
+                if (transferido > usuario.saldo) {
+                    System.out.println("Valor de transferência maior do que o saldo");
+                    System.out.println("Saldo: " + usuario.saldo);
+                } else {
+                    System.out.println(String.format("Novo saldo: R$ " + usuario.transferencia(transferido), .2f));
+                }
             } else if (opcao <= 0 && opcao > 4) {
                 System.out.println("Opção inválida");
             }
